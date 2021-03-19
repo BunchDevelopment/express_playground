@@ -16,10 +16,17 @@
     "stylelint-config-prettier": "^6.0.0",
     "stylelint-config-recommended": "^3.0.0",
     "stylelint-prettier": "^1.1.2",
-    "stylelint-vscode": "^7.0.0-6"
+    "stylelint-vscode": "^7.0.0-6",
+    "parcel-bundler": "1.12.3"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.1",
+    "morgan": "^1.10.0",
     "node": "^15.8.0",
-    "yargs-parser": ">=13.1.2"    
+    "nodemon": "^2.0.7",
+    "yargs-parser": ">=13.1.2"
   }
 }

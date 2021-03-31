@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
 const users = require('./users');
 const mongoose = require('mongoose');
 
@@ -16,7 +15,6 @@ db.once('open', () => (db_status = 'Successfully opened connection to Mongo!'));
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(morgan('dev'));
 app.use('/api/users', users);
 
 app.get('/', (req, res) => {

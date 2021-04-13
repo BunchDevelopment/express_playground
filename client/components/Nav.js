@@ -1,8 +1,3 @@
-// if (link.title !== "Home") {
-//   return link.title
-// } else {
-//   return ""
-// }
 
 export default links => `
 <nav>

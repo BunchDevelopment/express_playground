@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const mailingListController = require('./controllers/mailingList');
+const userController = require('./controllers/user');
 
 const app = express();
 mongoose.connect('mongodb://localhost/test');
@@ -9,6 +10,7 @@ mongoose.connect('mongodb://localhost/test');
 app.use(express.json());
 app.use(cors());
 app.use('/mailingList', mailingListController);
+app.use('/user', userController);
 
 const db = mongoose.connection;
 

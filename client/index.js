@@ -7,7 +7,7 @@ import axios from 'axios';
 const router = new Navigo(window.location.origin);
 router
 	.on({
-		':page': params => {
+		':page': (params) => {
 			render(state[params.page]);
 		},
 		'/': () => render(state.Home)
@@ -15,14 +15,14 @@ router
 	.resolve();
 
 axios
-	.get('http://localhost:4000/api/users/allUsers')
-	.then(res => (state.UserInfo.user = res.data[1]))
-	.catch(err => console.log(err, 'error on allUsers get'));
+	.get('https://swapi.dev/api/people')
+	.then((res) => (state.Bio.listOfSWChars = res.data.results))
+	.catch((err) => console.log(err, 'error on allUsers get'));
 
 axios
 	.get('https://jsonplaceholder.typicode.com/posts')
-	.then(response => {
-		response.data.forEach(post => {
+	.then((response) => {
+		response.data.forEach((post) => {
 			state.Blog.posts.push(post);
 		});
 		const params = router.lastRouteResolved().params;
@@ -30,7 +30,7 @@ axios
 			render(state[params.page]);
 		}
 	})
-	.catch(err => console.log(err));
+	.catch((err) => console.log(err));
 
 function render(st = state.Home) {
 	// console.log("rendering state", st);
@@ -47,14 +47,25 @@ function render(st = state.Home) {
 	addPicOnFormSubmit(st);
 	if (st.view === 'Home') {
 		const submitButton = document.getElementById('submitButton');
-		submitButton.addEventListener('click', e => {
-			const email = document.getElementById('email').value;
+		submitButton.addEventListener('click', (e) => {
+            const email = document.getElementById('email').value;
+            const passwordbutton = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
 			if (email) {
 				axios
-					.put('http://localhost:4000/api/users/test', { email })
-					.then(res => console.log(res))
-					.catch(err => console.log(err));
+					.put('http://localhost:4000/api/users/test', { email, password })
+					.then((res) => console.log(res))
+					.catch((err) => console.log(err));
 			}
+		});
+	}
+	if (st.view === 'Bio') {
+		const swChars = document.querySelectorAll('.swChar');
+		swChars.forEach((curr, ind) => {
+			curr.addEventListener('click', () => {
+				console.log(state.Bio.listOfSWChars[ind].name);
+                axios.delete('api route', {id: state.Bio.listOfSWChars.ID})
+			});
 		});
 	}
 }
@@ -66,7 +77,7 @@ function addNavEventListeners() {
 
 function addPicOnFormSubmit(st) {
 	if (st.view === 'Form') {
-		document.querySelector('form').addEventListener('submit', event => {
+		document.querySelector('form').addEventListener('submit', (event) => {
 			event.preventDefault();
 			// convert HTML elements to Array
 			let inputList = Array.from(event.target.elements);

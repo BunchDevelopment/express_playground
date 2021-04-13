@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const mailingList = require('../models/mailinglist').model;
+const User = require('../models/user').model;
 
 router.get('/', (req, res) => {
 	mailingList.find({}).then((stuff) => {
@@ -13,6 +14,18 @@ router.post('/new', async (req, res) => {
 		await newSub.save();
 		const newList = await mailingList.find({});
 		res.status(200).send(newList);
+	} catch (err) {
+		res.status(500).send('Error at POST mailingList/new');
+		console.log(err, 'Error at POST mailingList/new');
+	}
+});
+
+router.post('/newUser', async (req, res) => {
+	try {
+		const newUser = new User(req.body);
+		await newUser.save();
+		const userInfo = await User.find({});
+		res.status(200).send(userInfo);
 	} catch (err) {
 		res.status(500).send('Error at POST mailingList/new');
 		console.log(err, 'Error at POST mailingList/new');

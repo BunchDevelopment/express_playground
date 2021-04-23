@@ -33,8 +33,6 @@ axios
 	.catch((err) => console.log(err));
 
 function render(st = state.Home) {
-	// console.log("rendering state", st);
-	// console.log("state.Blog", state.Blog);
 	document.querySelector('#root').innerHTML = `
   ${Header(st)}
   ${Nav(state.Links)}
@@ -48,9 +46,9 @@ function render(st = state.Home) {
 	if (st.view === 'Home') {
 		const submitButton = document.getElementById('submitButton');
 		submitButton.addEventListener('click', (e) => {
-            const email = document.getElementById('email').value;
-            const passwordbutton = document.getElementById('password').value;
-            const name = document.getElementById('name').value;
+			const email = document.getElementById('email').value;
+			const passwordbutton = document.getElementById('password').value;
+			const name = document.getElementById('name').value;
 			if (email) {
 				axios
 					.put('http://localhost:4000/api/users/test', { email, password })
@@ -64,7 +62,7 @@ function render(st = state.Home) {
 		swChars.forEach((curr, ind) => {
 			curr.addEventListener('click', () => {
 				console.log(state.Bio.listOfSWChars[ind].name);
-                axios.delete('api route', {id: state.Bio.listOfSWChars.ID})
+				axios.delete('api route', { id: state.Bio.listOfSWChars.ID });
 			});
 		});
 	}
@@ -84,10 +82,10 @@ function addPicOnFormSubmit(st) {
 			// remove submit button from list
 			inputList.pop();
 			// construct new picture object
-			let newPic = inputList.reduce((pictureObject, input) => {
-				pictureObject[input.name] = input.value;
-				return pictureObject;
-			}, {});
+			// let newPic = inputList.reduce((pictureObject, input) => {
+			// 	pictureObject[input.name] = input.value;
+			// 	return pictureObject;
+			// }, {});
 			// add new picture to state.Gallery.pictures
 			state.Gallery.pictures.push(newPic);
 			render(state.Gallery);

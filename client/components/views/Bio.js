@@ -11,14 +11,6 @@ export default (st) => `
 		})
   }
   <a href="http://localhost:1234/Bio">im a clickable link</a>
-  <iframe
-  width="600"
-  height="450"
-  style="border:0"
-  loading="lazy"
-  allowfullscreen
-  src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDHnJ0lEiymL0Whvmh24P6hgBwVyZz5XQs
-  &q=foodbank+near+63122">
 </iframe>
 </section>
 `;

@@ -20,6 +20,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => (db_status = 'WE GOT THIS CONNECTION. LETS GOOOOOOOO'));
 
 app.get('/', (req, res) => {
+	console.log('ERROR AT WHATEVER SOMETHING');
 	res.status(200).send(db_status);
 });
 

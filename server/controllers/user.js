@@ -2,8 +2,8 @@ const router = require('express').Router();
 const user = require('../models/user').model;
 
 router.get('/', (req, res) => {
-	user.find({}).then((stuff) => {
-		res.status(200).send(stuff);
+	user.find({}).then((users) => {
+		res.status(200).send(users);
 	});
 });
 
@@ -16,6 +16,17 @@ router.post('/newUser', async (req, res) => {
 	} catch (err) {
 		res.status(500).send('Error at POST user/new');
 		console.log(err, 'Error at POST user/new');
+	}
+});
+
+router.get('/getByID/:id', async (req, res) => {
+	const { id } = req.params;
+	try {
+		const result = await user.findById(id);
+		res.status(200).send(result);
+	} catch (err) {
+		res.status(500).send('Error at GET user/findByID');
+		console.log(err, 'Error at GET user/findByID');
 	}
 });
 

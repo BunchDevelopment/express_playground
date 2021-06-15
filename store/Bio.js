@@ -1,5 +1,6 @@
 export default {
-  header: "About Me",
-  view: "Bio",
-  listOfSWChars: []
+	header: 'About Me',
+	view: 'Bio',
+	listOfSWChars: [],
+	danteStuff: []
 };

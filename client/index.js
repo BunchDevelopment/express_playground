@@ -3,68 +3,39 @@ import { Header, Nav, Main, Footer } from './components';
 import * as state from '../store';
 import Navigo from 'navigo';
 import axios from 'axios';
+import '../env';
 
 const router = new Navigo(window.location.origin);
+router.hooks({
+	before: (done, params) => {
+		const view = params && params.hasOwnProperty('view') ? params.view : 'Home';
+		if (view === 'Bio') {
+			Promise.all([axios.get('https://swapi.dev/api/people'), axios.get('https://dante-ipsum.herokuapp.com/list_passages')])
+				.then(([swapiData, danteData]) => {
+					console.log(danteData);
+					state.Bio.listOfSWChars = swapiData.data.results;
+					state.Bio.danteStuff = danteData.data;
+					done();
+				})
+				.catch((err) => console.log(err));
+		} else {
+			done();
+		}
+	}
+});
+
 router
 	.on({
-		':page': (params) => {
-			render(state[params.page]);
+		':view': (params) => {
+			render(state[params.view]);
 		},
 		'/': () => render(state.Home)
 	})
 	.resolve();
 
-axios
-	.get('https://swapi.dev/api/people')
-	.then((res) => (state.Bio.listOfSWChars = res.data.results))
-	.catch((err) => console.log(err, 'error on allUsers get'));
-
-axios
-	.get('https://jsonplaceholder.typicode.com/posts')
-	.then((response) => {
-		response.data.forEach((post) => {
-			state.Blog.posts.push(post);
-		});
-		const params = router.lastRouteResolved().params;
-		if (params) {
-			render(state[params.page]);
-		}
-	})
-	.catch((err) => console.log(err));
-
-function render(st = state.Home) {
-	document.querySelector('#root').innerHTML = `
-  ${Header(st)}
-  ${Nav(state.Links)}
-  ${Main(st)}
-  ${Footer()}
-`;
-
-	router.updatePageLinks();
-	addNavEventListeners();
-	addPicOnFormSubmit(st);
-	if (st.view === 'Home') {
-		const submitButton = document.getElementById('submitButton');
-		submitButton.addEventListener('click', (e) => {
-			const email = document.getElementById('email').value;
-			const passwordbutton = document.getElementById('password').value;
-			const name = document.getElementById('name').value;
-			if (email) {
-				axios
-					.put('http://localhost:4000/api/users/test', { email, password })
-					.then((res) => console.log(res))
-					.catch((err) => console.log(err));
-			}
-		});
-	}
+function addBioEventListeners(st) {
 	if (st.view === 'Bio') {
-		const swChars = document.querySelectorAll('.swChar');
-		swChars.forEach((curr, ind) => {
-			curr.addEventListener('click', () => {
-				console.log(state.Bio.listOfSWChars[ind].name);
-				axios.delete('api route', { id: state.Bio.listOfSWChars.ID });
-			});
-		});
+		//add event listener hear
 	}
 }
 
@@ -92,3 +63,49 @@ function addPicOnFormSubmit(st) {
 		});
 	}
 }
+
+function render(st = state.Home) {
+	document.querySelector('#root').innerHTML = `
+  ${Header(st)}
+  ${Nav(state.Links)}
+  ${Main(st)}
+  ${Footer()}
+`;
+
+	router.updatePageLinks();
+	addNavEventListeners();
+	addPicOnFormSubmit(st);
+	if (st.view === 'Home') {
+		const submitButton = document.getElementById('submitButton');
+		submitButton.addEventListener('click', (e) => {
+			const email = document.getElementById('email').value;
+			console.log(e);
+			// const passwordbutton = document.getElementById('password').value;
+			// const name = document.getElementById('name').value;
+			// if (email) {
+			// 	axios
+			// 		.put('http://localhost:4000/api/users/test', { email, password })
+			// 		.then((res) => console.log(res))
+			// 		.catch((err) => console.log(err));
+			// }
+		});
+	}
+	addBioEventListeners(st);
+}
+
+let inputValue;
+const clickHistory = [];
+
+const myInput = document.getElementById('myInput');
+myInput.addEventListener('input', () => {
+	inputValue = myInput.value;
+});
+const myTarget = document.querySelectorAll('#targetMe > li');
+myTarget.forEach((curr, ind) => {
+	curr.addEventListener('click', () => {
+		clickHistory.push(curr.textContent);
+		if (clickHistory.length > 5) {
+			console.log(clickHistory);
+		}
+	});
+});

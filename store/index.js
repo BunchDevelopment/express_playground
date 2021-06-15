@@ -6,4 +6,5 @@ export { default as Form } from './Form';
 export { default as Blog } from './Blog';
 export { default as Modal } from './Modal';
 export { default as UserInfo } from './UserInfo';
+export { default as Stuff } from './Stuff'
 

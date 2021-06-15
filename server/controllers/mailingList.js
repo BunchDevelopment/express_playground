@@ -3,9 +3,13 @@ const mailingList = require('../models/mailinglist').model;
 const User = require('../models/user').model;
 
 router.get('/', (req, res) => {
-	mailingList.find({}).then((stuff) => {
-		res.status(200).send(stuff);
-	});
+	try {
+		mailingList.find({}).then((stuff) => {
+			res.status(200).send(stuff);
+		});
+	} catch (err) {
+		console.log(err);
+	}
 });
 
 router.post('/new', async (req, res) => {

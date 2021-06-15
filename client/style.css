@@ -203,3 +203,34 @@ footer {
     padding: 20px;
     background-color: white;
   }
+
+  .flex{
+    display: flex;
+  }
+
+  .alignCenter{
+    align-items: center;
+  }
+
+  .flexColumn{
+    flex-flow: column wrap;
+  }
+
+  .flexRow{
+      flex-flow: row wrap;
+  }
+
+  .justifyCenter{
+    justify-content: center;
+  }
+
+  .cardContainer{
+      border: 1px solid black;
+      min-height: 140px;
+      margin: 6px;
+      padding: 5px;
+      background-color: #e2d1d13d;
+      border-radius: 6px;
+      flex-basis: 20%;
+      box-shadow: 0px 0px 5px 2px rgb(153 153 153 / 57%)
+  }
